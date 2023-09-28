@@ -37,4 +37,13 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+    public final ResponseEntity<ExceptionResponse> handleMethodNotAllowedExceptions(Exception ex, WebRequest req) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Date(),
+                ex.getMessage(),
+                req.getDescription(false));
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.METHOD_NOT_ALLOWED);
+    }
 }

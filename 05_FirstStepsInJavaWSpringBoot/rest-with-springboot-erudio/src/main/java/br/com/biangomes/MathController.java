@@ -16,12 +16,24 @@ public class MathController {
 
 	@RequestMapping(value = "/sum/{n1}/{n2}", method = RequestMethod.GET)
 	public Double sum(@PathVariable("n1") String n1, @PathVariable("n2") String n2) throws Exception {
-
 		if (!isNumeric(n1) || !isNumeric(n2)) {
 			throw new UnsupportedMathOperationException("Não é permitido caracteres diferentes de números!");
 		}
 
 		return convertToDouble(n1) + convertToDouble(n2);
+	}
+
+	@RequestMapping(value = "/sub/{n1}/{n2}", method = RequestMethod.GET)
+	public Double sub(@PathVariable("n1") String n1, @PathVariable("n2") String n2) throws Exception {
+		if (!isNumeric(n1) || !isNumeric(n2)) {
+			throw new UnsupportedMathOperationException("Não é permitido caracteres diferentes de números!");
+		}
+
+		return convertToDouble(n1) - convertToDouble(n2);
+	}
+
+	@RequestMapping(value = "/div/{n1}/{n2}", method = RequestMethod.GET)
+	public Double div(@PathVariable("n1") String n1, @PathVariable("n2") String n2) throws Exception {
 
 	}
 
