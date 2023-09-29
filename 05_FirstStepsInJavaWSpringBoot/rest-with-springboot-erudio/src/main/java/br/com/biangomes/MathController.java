@@ -2,6 +2,7 @@ package br.com.biangomes;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import br.com.biangomes.exceptions.CantDivideByZeroException;
 import br.com.biangomes.exceptions.UnsupportedMathOperationException;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,42 @@ public class MathController {
 
 	@RequestMapping(value = "/div/{n1}/{n2}", method = RequestMethod.GET)
 	public Double div(@PathVariable("n1") String n1, @PathVariable("n2") String n2) throws Exception {
+		if (!isNumeric(n1) || !isNumeric(n2)) {
+			throw new UnsupportedMathOperationException("Não é permitido caracteres diferentes de números!");
+		}
 
+		if (n2 == "0") {
+			throw new CantDivideByZeroException("Não é permitido dividir por zero!");
+		}
+
+		return convertToDouble(n1) / convertToDouble(n2);
+	}
+
+	@RequestMapping(value="/mult/{n1}/{n2}", method = RequestMethod.GET)
+	public Double mult(@PathVariable("n1") String n1, @PathVariable("n2") String n2) {
+		if (!isNumeric(n1) || !isNumeric(n2)) {
+			throw new UnsupportedMathOperationException("Não é permitido caracteres diferentes de números!");
+		}
+
+		return convertToDouble(n1) * convertToDouble(n2);
+	}
+
+	@RequestMapping(value="/mean/{n1}/{n2}", method = RequestMethod.GET)
+	public Double mean(@PathVariable("n1") String n1, @PathVariable("n2") String n2) {
+		if (!isNumeric(n1) || !isNumeric(n2)) {
+			throw new UnsupportedMathOperationException("Não é permitido caracteres diferentes de números!");
+		}
+
+		return (convertToDouble(n1) + convertToDouble(n2)) / 2;
+	}
+
+	@RequestMapping(value = "/root/{n1}", method = RequestMethod.GET)
+	public Double squareRoot(@PathVariable("n1") String n1) {
+		if (!isNumeric(n1)) {
+			throw new UnsupportedMathOperationException("Não é permitido caracteres diferentes de números!");
+		}
+
+		return Math.sqrt(convertToDouble(n1));
 	}
 
 	private Double convertToDouble(String numero) {
